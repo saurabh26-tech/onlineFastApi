@@ -1,27 +1,37 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
+import pyperclip
 
 app = FastAPI()
 
-class Msg(BaseModel):
-    msg: str
+class Experiments:
+    def __init__(self):
+        self.experiments = {}
+        for id in [1, 2, 5, 8]:
+            try:
+                with open(f"{id}.txt", "r") as f:
+                    self.experiments[id] = f.read()
+            except FileNotFoundError:
+                self.experiments[id] = ""
 
+    def get_experiment(self, id):
+        return self.experiments[id]
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World. Welcome to FastAPI!"}
+async def home():
+    return "loading online Java compiler...Please Wait"
 
+@app.get("/java-compiler")
+async def exp():
+    return "load/num Please Wait Loading Compiler"
 
-@app.get("/path")
-async def demo_get():
-    return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
+@app.get("/load/{id}")
+async def get_experiment(id: int):
+    ex = Experiments()
+    if id not in ex.experiments:
+        raise HTTPException(status_code=404, detail="Server Timeout")
+    
+    copy_to_clipboard(ex.get_experiment(id))
+    return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
 
-
-@app.post("/path")
-async def demo_post(inp: Msg):
-    return {"message": inp.msg.upper()}
-
-
-@app.get("/path/{path_id}")
-async def demo_get_path_id(path_id: int):
-    return {"message": f"This is /path/{path_id} endpoint, use post request to retrieve result"}
+def copy_to_clipboard(text):
+    pyperclip.copy(text)
