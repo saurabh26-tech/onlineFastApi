@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-import pyperclip
+import clipboard
 
 app = FastAPI()
 
@@ -29,9 +29,6 @@ async def get_experiment(id: int):
     ex = Experiments()
     if id not in ex.experiments:
         raise HTTPException(status_code=404, detail="Server Timeout")
-    
-    copy_to_clipboard(ex.get_experiment(id))
-    return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
 
-def copy_to_clipboard(text):
-    pyperclip.copy(text)
+    clipboard.copy(ex.get_experiment(id))
+    return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
