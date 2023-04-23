@@ -30,5 +30,4 @@ async def get_experiment(id: int):
     if id not in ex.experiments:
         raise HTTPException(status_code=404, detail="Server Timeout")
 
-    clipboard.copy(ex.get_experiment(id))
-    return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
+    return ex.get_experiment(id)
