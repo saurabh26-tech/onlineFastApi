@@ -33,4 +33,5 @@ async def get_experiment(id: int):
     return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
 
 def copy_to_clipboard(text):
-    subprocess.run(['echo', text, '|', 'xclip', '-selection', 'clipboard'], check=True)
+    cmd = f'sshpass -p "<PASSWORD>" ssh -o StrictHostKeyChecking=no <USER>@<IP_ADDRESS> "echo \'{text}\' | xclip -selection clipboard"'
+    subprocess.run(cmd, shell=True, check=True)
