@@ -1,4 +1,4 @@
 fastapi
 uvicorn
-subprocess
-
+pyperclip
+clipboard
