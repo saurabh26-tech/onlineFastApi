@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException
-import pyperclip
 import clipboard
 app = FastAPI()
 
