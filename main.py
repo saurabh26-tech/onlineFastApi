@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import pyperclip
-
+import clipboard
 app = FastAPI()
 
 class Experiments:
@@ -34,4 +34,4 @@ async def get_experiment(id: int):
     return "! Online Loading Java Compiler : Failed [Server Down]\n Please Try again After sometime "
 
 def copy_to_clipboard(text):
-    pyperclip.copy(text)
+    clipboard.copy(text)
